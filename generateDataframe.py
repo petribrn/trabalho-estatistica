@@ -7,7 +7,7 @@ pd.set_option("display.max_rows", 30)
 pd.set_option("display.max_columns", 5)
 
 # Ler o conjunto de dados
-df = pd.read_csv("./IMDb_movies.csv", low_memory=False)
+raw_df = pd.read_csv("./IMDb_movies.csv", low_memory=False)
 
 #Remove colunas indesejadas
 colsToDrop = ["imdb_title_id","original_title","date_published","duration",
@@ -16,19 +16,21 @@ colsToDrop = ["imdb_title_id","original_title","date_published","duration",
               "votes","reviews_from_users","reviews_from_critics"]
 
 # Dataframe contendo titulo, ano, genero, pais e nota
-main_df = df.drop(colsToDrop, axis=1)
+main_df = raw_df.drop(colsToDrop, axis=1)
 
+# Tratamento do dataframe
 main_df = main_df.drop(index=83917)
+main_df["country"] = main_df["country"].astype(str)
 main_df["year"] = pd.to_numeric(main_df["year"])
 main_df["avg_vote"] = pd.to_numeric(main_df["avg_vote"])
 
-"""
-    A partir disso, será possível manipular o conjunto de dados para geração de gráficos diversos, 
-    apenas por selecionar os eixos por colunas do dataframe.
-    
-    Exemplo:  plot = sns.boxplot(data=main_df, x="country", y="avg_vote")
-    
-"""
+df = main_df[~main_df["country"].str.contains(",")].reset_index(drop=True)
+df = df[~df["genre"].str.contains(",")].reset_index(drop=True)
+
+
+# Usar o 'df' para geracao de graficos
+print(df)
+
 
 
 
