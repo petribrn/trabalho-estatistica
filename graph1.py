@@ -10,9 +10,10 @@ top_countries.reset_index(drop=True, inplace=True)
 
 plt.figure(figsize=(20,10))
 plt.bar(top_countries["country"],top_countries["freq"], width=0.8)
-plt.xticks(rotation=90)
-plt.xlabel("País")
-plt.ylabel("Nº de filmes")
+plt.xticks(rotation=90, fontsize=16)
+plt.yticks(fontsize=16)
+plt.xlabel("País", fontsize=20)
+plt.ylabel("Nº de filmes", fontsize=20)
 plt.tight_layout()
 
 plt.savefig("./img-graphs/num_filmes_pais.png")
